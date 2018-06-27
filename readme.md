@@ -4,7 +4,7 @@ To test out the project:
  1. Start the server
   ```
   cd server
-  node server/server.js
+  node server.js
   ```
  2. Start the client
  ```
