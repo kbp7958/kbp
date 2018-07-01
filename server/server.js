@@ -15,7 +15,7 @@ app.use(express.static(path.resolve(__dirname + '/../client/build')));
 io.on('connection', (socket) => {
 
   socket.emit('action', { type: 'SET_ACCOUNT', payload: { account: race.getAccount() } });
-  dispatchContratStateUpdate();
+  dispatchContratStateUpdate('Initialization');
 
   socket.on('action', ({type, payload}) => {
     switch(type) {
@@ -39,16 +39,17 @@ io.on('connection', (socket) => {
 
 });
 
-let dispatchContratStateUpdate = () => {
-  race.getState().then((contract) => {
-    io.sockets.emit('action', { type: 'CONTRACT_STATE_UPDATE', payload: { contract } });
+let dispatchContratStateUpdate = (eventLabel) => {
+  race.getState().then((contractState) => {
+    io.sockets.emit('action', { type: 'CONTRACT_STATE_UPDATE', payload: { eventLabel, contractState } });
   });
 };
 
 database.connect();
 
-let eventListener = (event) => {
-  dispatchContratStateUpdate();
+let eventListener = (eventLabel) => {
+  console.log(eventLabel);
+  dispatchContratStateUpdate(eventLabel);
 };
 
 race.init(settings.provider, eventListener).then(() => {

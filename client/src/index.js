@@ -7,22 +7,19 @@ import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 import io from 'socket.io-client';
 
-let reducer = (state = {count: 0}, {type, payload} ) => {
+let reducer = (state = {}, {type, payload} ) => {
     switch(type) {
-        case 'INCREMENT':
-        return {
-            count: state.count + 1
-        }
-        case 'RESET':
-        return {
-            count: 0
-        }
-        case 'SET':
-        return {
-            count: payload.value
-        }
-        default:
-        return state;
+        case 'SET_ACCOUNT':
+            return Object.assign({}, state, {
+                account: payload.account,
+                lastEvent: payload.eventLabel
+            });
+        case 'CONTRACT_STATE_UPDATE':
+            return Object.assign({}, state, {
+                contractState: payload.contractState,
+                lastEvent: payload.eventLabel
+            });
+        default: return state;
     }
 }
 
@@ -30,10 +27,8 @@ const socketHandler = (socket) => (store) => (next) => (action) => {
     switch(action.type) {
         case 'PLACE_BET':
         case 'PLAYER_READY_TO_RACE':
-        socket.emit('action', action);
-        break;
-        default:
-        break;
+        socket.emit('action', action); break;
+        default: break;
     }
     // if(action.type === 'SUBMIT') {
     //     let state = store.getState();
@@ -49,7 +44,6 @@ const middleWare = applyMiddleware(socketHandler(socket));
 const store = createStore(reducer, middleWare);
 
 socket.on('action', (data) => {
-    console.log(data)
     store.dispatch(data);
 });
 

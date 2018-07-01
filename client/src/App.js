@@ -1,21 +1,29 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Counter from './components/Counter';
+import { connect } from 'react-redux';
+import MainScreen from './components/MainScreen';
 
 class App extends Component {
 
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">KBP</h1>
-        </header>
-        <Counter />
-      </div>
-    );
-  }
+    render() {
+        if (this.props.account && this.props.contractState) {
+            return (
+                <div>
+                    <div>Your account is: {this.props.account}</div>
+                    <MainScreen />
+                </div>
+            );
+        } else {
+            return (
+                <div>LOADING</div>
+            );
+        }
+    }
 }
 
-export default App;
+const mapStateToProps = state => ({
+    account: state.account,
+    contractState: state.contractState
+});
+
+export default connect(mapStateToProps)(App);

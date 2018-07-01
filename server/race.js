@@ -25,15 +25,15 @@ let listenForEvents = (eventListener) => {
     return Race.deployed().then(function (instance) {
         instance.betPlaced({}, { fromBlock: 'latest', toBlock: 'latest' }).watch((err) => {
             assert.equal(null, err);
-            eventListener();
+            eventListener('Bet placed');
         });
         instance.playersReadyToRaceChanged({}, { fromBlock: 'latest', toBlock: 'latest' }).watch((err) => {
             assert.equal(null, err);
-            eventListener();
+            eventListener('Players ready to race changed');
         });
         instance.finishedRace({}, { fromBlock: 'latest', toBlock: 'latest' }).watch((err) => {
             assert.equal(null, err);
-            eventListener();
+            eventListener('Finished race');
         });
     }).catch(function (error) {
         console.log(error)
@@ -71,8 +71,9 @@ let getState = () => {
             for (var i = 0; i < betCount; i++) {
                 contractState.bets.push({
                     index: bets[i][0].toString(),
-                    planer: bets[i][1],
-                    amount: bets[i][2].toString()
+                    player: bets[i][1],
+                    amount: bets[i][2].toString(),
+                    playerReadyToRace: bets[i][3]
                 });
             }
             return raceInstance.playersReadyToRace();
@@ -97,8 +98,6 @@ let getState = () => {
 let placeBet = (index, amount) => {
     return Race.deployed().then(function (instance) {
         return instance.placeBet(index, amount, {from: account, gas: 45000000});
-    }).then(function () {
-        console.log('Bet placed')
     }).catch(function (error) {
         console.log(error)
     });
@@ -107,8 +106,6 @@ let placeBet = (index, amount) => {
 let playerReadyToRace = (index, amount) => {
     return Race.deployed().then(function (instance) {
         return instance.playerReadyToRace(index, amount, {from: account, gas: 45000000});
-    }).then(function () {
-        console.log('Player ready to race')
     }).catch(function (error) {
         console.log(error)
     });

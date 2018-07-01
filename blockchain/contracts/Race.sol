@@ -25,6 +25,7 @@ contract Race {
         uint index;
         address player;
         uint amount;
+        bool readyToRace;
     }
 
     mapping(uint => Horse) public horses;
@@ -53,10 +54,9 @@ contract Race {
         }
         
         require(!players[msg.sender]);
-        bets[betCount++] = Bet(index, msg.sender, amount);
+        bets[betCount++] = Bet(index, msg.sender, amount, false);
         players[msg.sender] = true;
         playersCount++;
-        playersReadyToRace = 0;
         jackpot += amount;
         
         emit betPlaced();
@@ -64,8 +64,21 @@ contract Race {
     
     function playerReadyToRace () public {
         require(players[msg.sender]);
+
+        bool playerReady = false;
+        for (uint i=0; i<betCount; i++) {
+            if(bets[i].player == msg.sender && !bets[i].readyToRace) {
+                bets[i].readyToRace = true;
+                playerReady = true;
+                break;
+            }
+        }
+        
         playersReadyToRace++;
         emit playersReadyToRaceChanged();
+        
+        require(playerReady);
+
         if(playersReadyToRace == playersCount) {
             raceFinished = true;
             winnerHorse = uint8(uint256(keccak256(block.timestamp, block.difficulty))%horseCount);
