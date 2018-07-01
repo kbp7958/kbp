@@ -4,23 +4,58 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 const path = require('path');
 const database = require('./database');
-const { APPLICATION_PORT} = require('./constants');
+const { APPLICATION_PORT } = require('./constants');
+const race = require('./race.js');
+const fs = require('fs');
+
+const settings = JSON.parse(fs.readFileSync('settings.json', 'utf8'));
 
 app.use(express.static(path.resolve(__dirname + '/../client/build')));
 
-io.on('connection', function (socket) {
+io.on('connection', (socket) => {
 
-  database.queryCounter((value) => {
-    socket.emit('action', {type: 'SET', payload: {value: value}});
+  socket.emit('action', { type: 'SET_ACCOUNT', payload: { account: race.getAccount() } });
+  dispatchContratStateUpdate();
+
+  socket.on('action', ({type, payload}) => {
+    switch(type) {
+      case 'PLACE_BET':
+      race.placeBet(payload.index, payload.amount);
+      break;
+      case 'PLAYER_READY_TO_RACE':
+      race.playerReadyToRace();
+      break;
+    }
+
   });
 
-  socket.on('action', function (data) {
-    database.setCounter(data.value);
-  });
+  // database.queryCounter((value) => {
+  //   socket.emit('action', { type: 'SET', payload: { value: value } });
+  // });
+
+  // socket.on('action', function (data) {
+  //   database.setCounter(data.value);
+  // });
 
 });
 
+let dispatchContratStateUpdate = () => {
+  race.getState().then((contract) => {
+    io.sockets.emit('action', { type: 'CONTRACT_STATE_UPDATE', payload: { contract } });
+  });
+};
+
 database.connect();
 
-console.log('Server started on port ' + APPLICATION_PORT);
-server.listen(APPLICATION_PORT);
+let eventListener = (event) => {
+  dispatchContratStateUpdate();
+};
+
+race.init(settings.provider, eventListener).then(() => {
+
+  console.log('Server started on port ' + APPLICATION_PORT);
+  server.listen(APPLICATION_PORT);
+
+});
+
+

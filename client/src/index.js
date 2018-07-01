@@ -27,10 +27,18 @@ let reducer = (state = {count: 0}, {type, payload} ) => {
 }
 
 const socketHandler = (socket) => (store) => (next) => (action) => {
-    if(action.type === 'SUBMIT') {
-        let state = store.getState();
-        socket.emit('action', {value: state.count});
+    switch(action.type) {
+        case 'PLACE_BET':
+        case 'PLAYER_READY_TO_RACE':
+        socket.emit('action', action);
+        break;
+        default:
+        break;
     }
+    // if(action.type === 'SUBMIT') {
+    //     let state = store.getState();
+    //     socket.emit('action', {value: state.count});
+    // }
     next(action);
 };
 
@@ -41,6 +49,7 @@ const middleWare = applyMiddleware(socketHandler(socket));
 const store = createStore(reducer, middleWare);
 
 socket.on('action', (data) => {
+    console.log(data)
     store.dispatch(data);
 });
 

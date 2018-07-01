@@ -3,25 +3,21 @@ import { connect } from 'react-redux';
 
 class Counter extends Component {
 
-  increment = () => {
-    this.props.dispatch({type: 'INCREMENT'});
+  placeBet = () => {
+    this.props.dispatch({type: 'PLACE_BET', payload: {index: 1, amount: 55}});
   };
 
-  reset = () => {
-    this.props.dispatch({type: 'RESET'});
+  playerReadyToRace = () => {
+    this.props.dispatch({type: 'PLAYER_READY_TO_RACE'});
   };
 
-  submit = () => {
-    this.props.dispatch({type: 'SUBMIT'});
-  };
 
   render() {
     return (
         <div>
           <div>{this.props.count}</div>
-          <button onClick={this.reset}>Reset</button>
-          <button onClick={this.increment}>Increment</button>
-          <button onClick={this.submit}>Submit</button>
+          <button onClick={this.placeBet}>Place bet</button>
+          <button onClick={this.playerReadyToRace}>Ready to race</button>
         </div>
     );
   }
