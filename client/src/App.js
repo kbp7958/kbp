@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { connect } from 'react-redux';
 import MainScreen from './components/MainScreen';
+import SoundControl from './components/SoundControl';
 
 class App extends Component {
 
@@ -9,6 +10,7 @@ class App extends Component {
         if (this.props.account && this.props.contractState) {
             return (
                 <div>
+                    <SoundControl />
                     <div>Your account is: {this.props.account}</div>
                     <MainScreen />
                 </div>

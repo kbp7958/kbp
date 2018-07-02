@@ -3,18 +3,50 @@ import { connect } from 'react-redux';
 
 class PlaceBet extends Component {
 
-    placeBet = () => {
-        this.props.dispatch({ type: 'PLACE_BET', payload: { index: 1, amount: 55 } });
-    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            betAmount: 10,
+            selectedHorse: 0
+        };
+
+        this.handleBetAmountChange = this.handleBetAmountChange.bind(this);
+        this.handleSelectedHorseChange = this.handleSelectedHorseChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
+
+    handleBetAmountChange(event) {
+        this.setState({betAmount: event.target.value});
+    }
+
+    handleSelectedHorseChange(event) {
+        this.setState({selectedHorse: event.target.value});
+    }
+
+    handleSubmit(event) {
+        event.preventDefault();
+        this.props.dispatch({ type: 'PLACE_BET', payload: { index: this.state.selectedHorse, amount: this.state.betAmount } });
+    }
 
     render() {
-
         return (
             <div>
-                <button onClick={this.placeBet}>Place bet</button>
+                <form onSubmit={this.handleSubmit}>
+                    <select value={this.state.selectedHorse} onChange={this.handleSelectedHorseChange}>
+                        {this.props.contractState.horses.map((horse) => (
+                            <option value={horse.index} key={horse.index}>{horse.name}</option>
+                        ))}
+                    </select>
+                    <input type="number" value={this.state.betAmount} onChange={this.handleBetAmountChange} />
+                    <button type="submit">Place bet</button>
+                </form>
             </div>
         );
     }
 }
 
-export default connect()(PlaceBet);
+const mapStateToProps = state => ({
+    contractState: state.contractState
+});
+
+export default connect(mapStateToProps)(PlaceBet);

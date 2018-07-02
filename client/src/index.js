@@ -14,6 +14,10 @@ let reducer = (state = {}, {type, payload} ) => {
                 account: payload.account,
                 lastEvent: payload.eventLabel
             });
+        case 'SET_SOUNDS':
+            return Object.assign({}, state, {
+                sounds: payload.sounds
+            });
         case 'CONTRACT_STATE_UPDATE':
             return Object.assign({}, state, {
                 contractState: payload.contractState,
@@ -27,13 +31,10 @@ const socketHandler = (socket) => (store) => (next) => (action) => {
     switch(action.type) {
         case 'PLACE_BET':
         case 'PLAYER_READY_TO_RACE':
+        case 'SET_SOUNDS':
         socket.emit('action', action); break;
         default: break;
     }
-    // if(action.type === 'SUBMIT') {
-    //     let state = store.getState();
-    //     socket.emit('action', {value: state.count});
-    // }
     next(action);
 };
 

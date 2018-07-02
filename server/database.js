@@ -11,14 +11,14 @@ let connect = () => {
     });
 };
 
-let setCounter = (value) => {
-    db.collection("counter").updateOne({}, { $set: {value: value }}, {upsert: true}, (err, res) => {
+let setSounds = (value) => {
+    db.collection("sounds").updateOne({}, { $set: {value: value }}, {upsert: true}, (err, res) => {
         assert.equal(null, err);
     });
 };
 
-let queryCounter = (callback) => {
-    db.collection("counter").findOne({}, (err, res) => {
+let querySounds = (callback) => {
+    db.collection("sounds").findOne({}, (err, res) => {
         assert.equal(null, err);
         callback(res? res.value : 0);
     });
@@ -26,6 +26,6 @@ let queryCounter = (callback) => {
 
 module.exports = {
     connect,
-    setCounter,
-    queryCounter
+    setSounds,
+    querySounds
 }

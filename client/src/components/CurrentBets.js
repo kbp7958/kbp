@@ -32,7 +32,7 @@ class CurrentBets extends Component {
                     </thead>
                     <tbody>
                         {this.props.contractState.bets.map((bet) => (
-                            <tr key="{bet.player}">
+                            <tr key={bet.player}>
                                 <td>{bet.player}</td>
                                 <td>{this.props.contractState.horses[bet.index].name}</td>
                                 <td>{bet.amount}</td>
