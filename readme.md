@@ -6,7 +6,7 @@
 
  2. Setup configuration files
 
-    - Open blockchain/truffle.sh and set the "knode" provider provider information
+    - Open blockchain/truffle.sh and set the "knode" provider information
     - Open server/settings.json and set the url, username and apikey for the provider
 
  3. Deploy the smart contract
