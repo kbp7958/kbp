@@ -62,7 +62,7 @@ class RaceResult extends Component {
                     </tbody>
                 </table>
                 <div className="results-message">{ message}</div>
-                <div className="place-new-bet-message">Place another bet to start a new race</div>
+                <div className="place-new-bet-message">Place a bet to start a new race</div>
                 <PlaceBetPrompt />
             </div>
         );

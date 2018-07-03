@@ -41,3 +41,8 @@
     border: none;
     cursor: pointer;
 }
+
+.place-bet-button.disabled {
+    opacity: .4;
+    pointer-events: none;
+}

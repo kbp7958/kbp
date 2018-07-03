@@ -9,7 +9,8 @@ class PlaceBet extends Component {
         super(props);
         this.state = {
             betAmount: 10,
-            selectedHorse: 0
+            selectedHorse: 0,
+            betPlaced: false
         };
 
         this.handleBetAmountChange = this.handleBetAmountChange.bind(this);
@@ -33,6 +34,8 @@ class PlaceBet extends Component {
         audio.play();
         audio.muted = !this.props.sounds;
         this.props.dispatch({ type: 'PLAY_SOUND', payload: {sound: audio}});
+
+        this.setState({betPlaced: true});
     }
 
     render() {
@@ -47,7 +50,7 @@ class PlaceBet extends Component {
                     </select>
                     <label>Amount:</label>
                     <input type="number" className="bet-amount-input" value={this.state.betAmount} onChange={this.handleBetAmountChange} />
-                    <button type="submit" className="place-bet-button">Place bet</button>
+                    <button type="submit" className={'place-bet-button ' + (this.state.betPlaced? 'disabled' : '')}>Place bet</button>
                 </form>
             </div>
         );

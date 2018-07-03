@@ -26,3 +26,7 @@
     cursor: pointer;
 }
 
+.ready-to-race-button.disabled {
+    opacity: .4;
+    pointer-events: none;
+}
