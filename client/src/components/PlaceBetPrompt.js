@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import '../css/PlaceBetPrompt.css';
+import betSound from '../sounds/bet.mp3';
 
 class PlaceBet extends Component {
 
@@ -27,6 +28,11 @@ class PlaceBet extends Component {
     handleSubmit(event) {
         event.preventDefault();
         this.props.dispatch({ type: 'PLACE_BET', payload: { index: this.state.selectedHorse, amount: this.state.betAmount } });
+
+        let audio = new Audio(betSound);
+        audio.play();
+        audio.muted = !this.props.sounds;
+        this.props.dispatch({ type: 'PLAY_SOUND', payload: {sound: audio}});
     }
 
     render() {
@@ -49,7 +55,8 @@ class PlaceBet extends Component {
 }
 
 const mapStateToProps = state => ({
-    contractState: state.contractState
+    contractState: state.contractState,
+    sounds: state.sounds
 });
 
 export default connect(mapStateToProps)(PlaceBet);

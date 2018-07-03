@@ -17,6 +17,10 @@ class SoundControl extends Component {
     handleSoundChange(event) {
         this.setState({sounds: event.target.checked});
         this.props.dispatch({ type: 'SET_SOUNDS', payload: { sounds: event.target.checked } });
+        let currentSound = this.props.currentSound;
+        if(currentSound) {
+            currentSound.muted = !event.target.checked;
+        }
     }
 
     render() {
@@ -36,7 +40,8 @@ class SoundControl extends Component {
 }
 
 const mapStateToProps = state => ({
-    sounds: state.sounds
+    sounds: state.sounds,
+    currentSound: state.currentSound
 });
 
 export default connect(mapStateToProps)(SoundControl);

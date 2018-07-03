@@ -1,6 +1,7 @@
 .current-bets-container {
     padding-bottom: 50px;
     text-align: center;
+    animation: slide-fade .6s ease-out;
 }
 
 .title {

@@ -1,6 +1,7 @@
 .race-results-container {
     padding-bottom: 50px;
     text-align: center;
+    animation: slide-fade .6s ease-out;
 }
 
 .title {
@@ -64,4 +65,24 @@
   50% {
     opacity: 1;
   }
+}
+
+
+
+.fade-enter {
+    opacity: 0;
+}
+
+.fade-enter-active {
+    opacity: 1;
+    transition: opacity 2s;
+}
+
+.fade-leave {
+    opacity: 1;
+}
+
+.fade-leave-active {
+    opacity: 0;
+    transition: opacity 2s;
 }

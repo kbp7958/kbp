@@ -3,6 +3,7 @@ import './css/App.css';
 import { connect } from 'react-redux';
 import MainScreen from './components/MainScreen';
 import SoundControl from './components/SoundControl';
+import loading from './img/loading.gif';
 
 class App extends Component {
 
@@ -24,7 +25,9 @@ class App extends Component {
             );
         } else {
             return (
-                <div>LOADING</div>
+                <div className="loading">
+                    <img src={loading} alt="Loading" />
+                </div>
             );
         }
     }

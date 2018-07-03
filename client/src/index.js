@@ -23,6 +23,14 @@ let reducer = (state = {}, {type, payload} ) => {
                 contractState: payload.contractState,
                 lastEvent: payload.eventLabel
             });
+        case 'RACE_ANIMATION_ENDED':
+        return Object.assign({}, state, {
+            lastEvent: 'Race animation ended'
+        });
+        case 'PLAY_SOUND':
+        return Object.assign({}, state, {
+            currentSound: payload.sound
+        });
         default: return state;
     }
 }

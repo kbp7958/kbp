@@ -31,3 +31,10 @@
     justify-content: center;
     min-height: 650px;
 }
+
+.loading {
+    position: absolute;
+    top: calc(50% - 64px);
+    left: calc(50% - 64px);
+    text-align: center;
+}
