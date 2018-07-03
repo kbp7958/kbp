@@ -22,7 +22,6 @@ class ReadyToRacePrompt extends Component {
     };
 
     render() {
-
         return (
             <div className="ready-to-race-prompt-container">
                 <div className="ready-to-race-controls">

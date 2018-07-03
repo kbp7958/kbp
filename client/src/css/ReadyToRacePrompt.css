@@ -19,7 +19,8 @@
     display: inline-block;
     height: 50px;
     width: 150px;
-    background: linear-gradient(green, darkgreen);
+    background: linear-gradient(rgb(100, 100, 100), black);
+    box-shadow: 3px 3px #888888;
     color: white;
     font-size: 16px;
     border: none;

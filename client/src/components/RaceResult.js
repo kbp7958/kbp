@@ -12,15 +12,16 @@ import horse5 from '../img/horse-5.png';
 class RaceResult extends Component {
 
     render() {
-
         let winners = getWinners(this.props.contractState.winnerHorse, this.props.contractState.bets);
         let award;
         let message;
+        let jackpotValue;
         if(winners.length > 0) {
             award = this.props.contractState.jackpot / winners.length;
-            if(winners.indexOf(this.props.contractState.account)) {
+            if(winners.indexOf(this.props.account) !== -1) {
                 message = `Congratulations! you won ${award}`;
             }
+            jackpotValue = 'Jackpot: ' + this.props.contractState.jackpot;
         } else {
             message = `jackpot grows to: ${this.props.contractState.jackpot}`;
         }
@@ -37,7 +38,6 @@ class RaceResult extends Component {
 
         return (
             <div className="race-results-container">
-                
                 <div className="title">Race Results</div>
                 <img className="winner-horse-image" src={winnerHorseImage} alt="Winner horse" />
                 <div className="winner-horse-name">Winner: {this.props.contractState.horses[this.props.contractState.winnerHorse].name}</div>
@@ -61,7 +61,8 @@ class RaceResult extends Component {
                         ))}
                     </tbody>
                 </table>
-                <div className="results-message">{ message}</div>
+                <div className="jackpot-value">{jackpotValue}</div>
+                <div className="results-message">{message}</div>
                 <div className="place-new-bet-message">Place a bet to start a new race</div>
                 <PlaceBetPrompt />
             </div>
@@ -70,6 +71,7 @@ class RaceResult extends Component {
 }
 
 const mapStateToProps = state => ({
+    account: state.account,
     contractState: state.contractState
 });
 
