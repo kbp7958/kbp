@@ -21,7 +21,7 @@ class MainScreen extends Component {
         }
 
         return (
-            <div className="main-screen-container">
+            <div className="main-screen-contents">
                 {component}
             </div>
         );

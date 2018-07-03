@@ -1,4 +1,6 @@
 .top-bar {
+    position: fixed;
+    width: calc(100vw - 40px);
     background: linear-gradient(black, #152934);
     color: white;
     height: 60px;
@@ -6,6 +8,7 @@
     align-items: center;
     padding-left: 20px;
     padding-right: 20px;
+    min-width: 600px;
 }
 
 .app-title {
@@ -19,17 +22,19 @@
 }
 
 .account {
+    margin-left: 20px;
     margin-right: 20px;
+
+    white-space: nowrap;
 }
 
 .main-screen-container {
-    height: calc(100vh - 60px);
+    top: 80px;
+    padding-top: 80px;
     width: 100%;
     display: flex;
     align-items: center;
-    overflow: auto;
     justify-content: center;
-    min-height: 800px;
 }
 
 .loading {

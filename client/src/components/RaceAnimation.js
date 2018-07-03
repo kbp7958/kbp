@@ -12,7 +12,6 @@ import horse5 from '../img/horse-5.png';
 class RaceAnimation extends Component {
 
     componentDidMount() {
-        window.scrollTo(0,0);
         this.animateRace(Number(this.props.winnerHorse));
     }
 

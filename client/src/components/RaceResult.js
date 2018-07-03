@@ -11,10 +11,6 @@ import horse5 from '../img/horse-5.png';
 
 class RaceResult extends Component {
 
-    componentDidMount() {
-        window.scrollTo(0,0);
-    }
-
     render() {
 
         let winners = getWinners(this.props.contractState.winnerHorse, this.props.contractState.bets);

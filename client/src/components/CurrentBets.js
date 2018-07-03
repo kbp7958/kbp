@@ -7,10 +7,6 @@ import '../css/CurrentBets.css';
 
 class CurrentBets extends Component {
 
-    componentDidMount() {
-        window.scrollTo(0,0);
-    }
-
     render() {
         const currentPlayerBet = getCurrentPlayerBet(this.props.account, this.props.contractState.bets);
         let playerAction;
