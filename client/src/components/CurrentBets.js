@@ -7,6 +7,10 @@ import '../css/CurrentBets.css';
 
 class CurrentBets extends Component {
 
+    componentDidMount() {
+        window.scrollTo(0,0);
+    }
+
     render() {
         const currentPlayerBet = getCurrentPlayerBet(this.props.account, this.props.contractState.bets);
         let playerAction;
@@ -17,7 +21,10 @@ class CurrentBets extends Component {
         } else if(!isCurrentPlayerReadyToRace(this.props.account, this.props.contractState.bets)) {
             message = 'The race will start when all players are ready'
             playerAction = <ReadyToRacePrompt />;
+        } else {
+            message = 'The race will start when all other players are ready'
         }
+
         return (
             <div className="current-bets-container">
                 <div className="title">Current Bets</div>
@@ -36,7 +43,7 @@ class CurrentBets extends Component {
                                 <td>{bet.player}</td>
                                 <td>{this.props.contractState.horses[bet.index].name}</td>
                                 <td>{bet.amount}</td>
-                                <td>{bet.readyToRace? 'Yes' : 'No'}</td>
+                                <td>{bet.playerReadyToRace? 'Yes' : 'No'}</td>
                             </tr>
                         ))}
                     </tbody>
