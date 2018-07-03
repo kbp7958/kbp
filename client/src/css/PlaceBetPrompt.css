@@ -1,0 +1,43 @@
+.place-bet-container {
+    text-align: center;
+}
+
+.place-bet-form {
+    display: inline-block;
+    border: solid 3px lightgrey;
+    padding: 20px;
+    box-shadow: 5px 10px 18px #888888;
+}
+
+.place-bet-form label {
+    margin-right: 10px;
+}
+
+.horse-to-bet {
+    font-size: 16px;
+    margin-right: 20px;
+    height: 40px;
+    width: 140px;
+    border: solid 3px lightgray;
+    background-color: white;
+}
+
+.bet-amount-input {
+    font-size: 16px;
+    height: 34px;
+    width: 80px;
+    text-align: right;
+    border: solid 3px lightgray;
+    margin-right: 20px;
+}
+
+.place-bet-button {
+    display: inline-block;
+    height: 50px;
+    width: 120px;
+    background: linear-gradient(green, darkgreen);
+    color: white;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}

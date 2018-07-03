@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import muteIcon from '../img/mute.png';
+import unmuteIcon from '../img/unmute.png';
+import '../css/SoundControl.css';
 
 class SoundControl extends Component {
 
@@ -18,11 +21,16 @@ class SoundControl extends Component {
 
     render() {
         return (
-            <input
-            name="sounds"
-            type="checkbox"
-            checked={this.state.sounds}
-            onChange={this.handleSoundChange} />
+            <div className="sound-control-container">
+                <label>
+                    <input className="sounds-checkbox"
+                    name="sounds"
+                    type="checkbox"
+                    checked={this.state.sounds}
+                    onChange={this.handleSoundChange} />
+                    <img className="sound-control-icon" src={this.state.sounds? unmuteIcon : muteIcon} alt="Sound" />
+                </label>
+            </div>
         );
     }
 }

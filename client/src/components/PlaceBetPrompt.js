@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import '../css/PlaceBetPrompt.css';
 
 class PlaceBet extends Component {
 
@@ -30,15 +31,17 @@ class PlaceBet extends Component {
 
     render() {
         return (
-            <div>
-                <form onSubmit={this.handleSubmit}>
-                    <select value={this.state.selectedHorse} onChange={this.handleSelectedHorseChange}>
+            <div className="place-bet-container">
+                <form className="place-bet-form" onSubmit={this.handleSubmit}>
+                    <label>Horse:</label>
+                    <select className="horse-to-bet" value={this.state.selectedHorse} onChange={this.handleSelectedHorseChange}>
                         {this.props.contractState.horses.map((horse) => (
                             <option value={horse.index} key={horse.index}>{horse.name}</option>
                         ))}
                     </select>
-                    <input type="number" value={this.state.betAmount} onChange={this.handleBetAmountChange} />
-                    <button type="submit">Place bet</button>
+                    <label>Amount:</label>
+                    <input type="number" className="bet-amount-input" value={this.state.betAmount} onChange={this.handleBetAmountChange} />
+                    <button type="submit" className="place-bet-button">Place bet</button>
                 </form>
             </div>
         );

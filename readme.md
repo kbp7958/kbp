@@ -17,6 +17,7 @@
 
  4. Download dependencies and start the server
     ```
+    cd ..
     cd server
     npm install
     node server.js

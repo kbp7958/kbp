@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import '../css/ReadyToRacePrompt.css';
 
 class ReadyToRacePrompt extends Component {
 
@@ -11,8 +12,11 @@ class ReadyToRacePrompt extends Component {
     render() {
 
         return (
-            <div>
-                <button onClick={this.playerReadyToRace}>Ready to race</button>
+            <div className="ready-to-race-prompt-container">
+                <div className="ready-to-race-controls">
+                    <div className="ready-to-race-message">Are you ready to race?</div>
+                    <button className="ready-to-race-button" onClick={this.playerReadyToRace}>Yes, I'm ready</button>
+                </div>
             </div>
         );
     }

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { getCurrentPlayerBet, isCurrentPlayerReadyToRace } from '../race-utils.js';
 import PlaceBetPrompt from './PlaceBetPrompt';
 import ReadyToRacePrompt from './ReadyToRacePrompt';
+import '../css/CurrentBets.css';
 
 class CurrentBets extends Component {
 
@@ -18,10 +19,9 @@ class CurrentBets extends Component {
             playerAction = <ReadyToRacePrompt />;
         }
         return (
-            <div>
-                <div>CURRENT BETS</div>
-                <div>Jackpot: {this.props.contractState.jackpot}</div>
-                <table>
+            <div className="current-bets-container">
+                <div className="title">Current Bets</div>
+                <table className="current-bets-table">
                     <thead>
                         <tr>
                             <th>Player</th>
@@ -41,7 +41,8 @@ class CurrentBets extends Component {
                         ))}
                     </tbody>
                 </table>
-                {message}
+                <div className="jackpot">Jackpot: {this.props.contractState.jackpot}</div>
+                <div className="message">{message}</div>
                 {playerAction}
             </div>
         );

@@ -5,16 +5,22 @@ import CurrentBets from './CurrentBets';
 
 class MainScreen extends Component {
 
+
     render() {
+
+        let component;
         if (this.props.contractState.raceFinished) {
-            return (
-                <RaceResult />
-            );
+            component = <RaceResult />
         } else {
-            return (
-                <CurrentBets />
-            );
+            component = <CurrentBets />
         }
+
+        return (
+            <div>
+                {component}
+            </div>
+        );
+        
     }
 }
 

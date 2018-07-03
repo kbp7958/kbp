@@ -1,0 +1,33 @@
+.top-bar {
+    background: linear-gradient(black, #152934);
+    color: white;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.app-title {
+    font-size: 32px;
+}
+
+.right-aligned-container {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+}
+
+.account {
+    margin-right: 20px;
+}
+
+.main-screen-container {
+    height: calc(100vh - 60px);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    overflow: auto;
+    justify-content: center;
+    min-height: 650px;
+}

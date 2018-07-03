@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './css/App.css';
 import { connect } from 'react-redux';
 import MainScreen from './components/MainScreen';
 import SoundControl from './components/SoundControl';
@@ -10,9 +10,16 @@ class App extends Component {
         if (this.props.account && this.props.contractState) {
             return (
                 <div>
-                    <SoundControl />
-                    <div>Your account is: {this.props.account}</div>
-                    <MainScreen />
+                    <div className="top-bar">
+                        <div className="app-title">Racecourse</div>
+                        <div className="right-aligned-container">
+                            <div className="account">Your account: {this.props.account}</div>
+                            <SoundControl />
+                        </div>
+                    </div>
+                    <div className="main-screen-container">
+                        <MainScreen />
+                    </div>
                 </div>
             );
         } else {
