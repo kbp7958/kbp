@@ -40,3 +40,17 @@
  - When all players are ready, the race takes place and the winning race horse is announced.
  - If one or more players had bet for the winning race horse, the jackpot will be distributed equally among them.
  - If there are no winners, the jackpot is carried over to the next race.
+
+
+---
+
+### Screen shots
+
+Place a bet: 
+![](./img/screen-1.png)
+
+Race: 
+![](./img/screen-2.png)
+
+Results: 
+![](./img/screen-3.png)
