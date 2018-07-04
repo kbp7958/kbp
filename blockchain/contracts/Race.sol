@@ -47,7 +47,7 @@ contract Race {
     }
     
     function placeBet (uint index, uint amount) public {
-        require(index >=0 && index <= horseCount);
+        require(index >=0 && index < horseCount);
 
         if(raceFinished) {
             reset();
@@ -73,15 +73,15 @@ contract Race {
                 break;
             }
         }
+
+        require(playerReady);
         
         playersReadyToRace++;
         emit playersReadyToRaceChanged();
-        
-        require(playerReady);
 
         if(playersReadyToRace == playersCount) {
-            raceFinished = true;
             winnerHorse = uint8(uint256(keccak256(block.timestamp, block.difficulty))%horseCount);
+            raceFinished = true;
             emit finishedRace();
         }
     }
