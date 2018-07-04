@@ -4,7 +4,7 @@
     <img src="./readme-resources/splash.png">
 </p>
 
-Horse racing game implemented as decentralized application.
+Horse racing game implemented as a decentralized application.
 
 The front end is built using [React](https://reactjs.org) and [Redux](https://redux.js.org). The back-end is built on [NodeJS](https://nodejs.org/) and utilizes [MongoDB](https://www.mongodb.com/) to store user preferences (enabling / disabling sounds in the application). Communication between the front-end and the back-end is carried out using [Socket.io](https://socket.io/). The game itself is implemented as a smart contract written in [Solidity](http://solidity.readthedocs.io).
 
@@ -22,22 +22,22 @@ The front end is built using [React](https://reactjs.org) and [Redux](https://re
     cd blockchain
     ./truffle-migrate.sh
     ```
-
- 4. Download dependencies and start the server.
-    ```
-    cd ..
-    cd server
-    npm install
-    node server.js
-    ```
- 5. download dependencies and build the client.
+ 4. download dependencies and build the client.
     ```
     cd ..
     cd client
     npm install
     npm run build
     ```
- 6. Open http://localhost:3001
+ 5. Download dependencies and start the server.
+    ```
+    cd ..
+    cd server
+    npm install
+    node server.js
+    ```
+
+ 6. Open http://localhost:3001.
 
 ### Game rules
 
@@ -48,7 +48,6 @@ The front end is built using [React](https://reactjs.org) and [Redux](https://re
  - When all players are ready, the race takes place and the winning race horse is announced.
  - If one or more players had bet for the winning race horse, the jackpot will be distributed equally among them.
  - If there are no winners, the jackpot is carried over to the next race.
-
 
 ---
 
