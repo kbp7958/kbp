@@ -46,11 +46,8 @@
 
 ### Screen shots
 
-Place a bet: 
-![](./img/screen-1.png)
+![](./common/img/screen-1.png)
 
-Race: 
-![](./img/screen-2.png)
+![](./common/img/screen-2.png)
 
-Results: 
-![](./img/screen-3.png)
+![](./common/img/screen-3.png)
