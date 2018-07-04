@@ -10,7 +10,7 @@ class App extends Component {
     render() {
         if (this.props.account && this.props.contractState) {
             return (
-                <div>
+                <div className="app">
                     <div className="top-bar">
                         <div className="app-title">Racecourse</div>
                         <div className="right-aligned-container">
