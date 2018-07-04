@@ -1,28 +1,36 @@
 # Racecourse
 
+<p align="center">
+    <img src="./readme-resources/splash.png">
+</p>
+
+Horse racing game implemented as decentralized application.
+
+The front end is built using [React](https://reactjs.org) and [Redux](https://redux.js.org). The back-end is built on [NodeJS](https://nodejs.org/) and utilizes [MongoDB](https://www.mongodb.com/) to store user preferences (enabling / disabling sounds in the application). Communication between the front-end and the back-end is carried out using [Socket.io](https://socket.io/). The game itself is implemented as a smart contract written in [Solidity](http://solidity.readthedocs.io).
+
 ### Environment setup:
 
- 1. Make sure MongoDB is running on mongodb://localhost:27017
+ 1. Make sure you have NodeJS installed. Also, MongoDB must be running on mongodb://localhost:27017.
 
- 2. Setup configuration files
+ 2. Setup configuration files.
 
-    - Open blockchain/truffle.sh and set the "knode" provider information
-    - Open server/settings.json and set the url, username and apikey for the provider
+    - Open blockchain/truffle.sh and set the "knode" provider information.
+    - Open server/settings.json and set the url, username and apikey for the provider.
 
- 3. Deploy the smart contract
+ 3. Deploy the smart contract.
     ```
     cd blockchain
     ./truffle-migrate.sh
     ```
 
- 4. Download dependencies and start the server
+ 4. Download dependencies and start the server.
     ```
     cd ..
     cd server
     npm install
     node server.js
     ```
- 5. download dependencies and build the client
+ 5. download dependencies and build the client.
     ```
     cd ..
     cd client
@@ -46,8 +54,14 @@
 
 ### Screen shots
 
-![](./common/img/screen-1.png)
+<p align="center">
+    <img src="./readme-resources/screen-1.png">
+</p>
 
-![](./common/img/screen-2.png)
+<p align="center">
+    <img src="./readme-resources/screen-2.png">
+</p>
 
-![](./common/img/screen-3.png)
+<p align="center">
+    <img src="./readme-resources/screen-3.png">
+</p>
