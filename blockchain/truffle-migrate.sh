@@ -1,5 +1,5 @@
 #!/bin/bash
-truffle migrate --network knode --reset > /dev/null &
+truffle migrate --network node --reset > /dev/null &
 sleep 1
 set -x
-truffle migrate --network knode --reset
+truffle migrate --network node --reset

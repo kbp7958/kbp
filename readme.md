@@ -14,7 +14,7 @@ The front end is built using [React](https://reactjs.org) and [Redux](https://re
 
  2. Setup configuration files.
 
-    - Open blockchain/truffle.sh and set the "knode" provider information.
+    - Open blockchain/truffle.sh and set the "node" provider information.
     - Open server/settings.json and set the url, username and apikey for the provider.
 
  3. Deploy the smart contract.
@@ -41,7 +41,7 @@ The front end is built using [React](https://reactjs.org) and [Redux](https://re
 
 ### Game rules
 
- - Players must place bets by selecting a race horse and an amount of tokens.
+ - Players must place bets by selecting a race horse and an amount.
  - No more than one bet per player is allowed in each race.
  - Once the bet is placed, players get to choose when they are ready to race.
  - Players may choose to race immediately or wait for others to join.
