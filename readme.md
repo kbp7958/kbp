@@ -12,24 +12,21 @@ The front end is built using [React](https://reactjs.org) and [Redux](https://re
 
  1. Make sure you have NodeJS installed. Also, MongoDB must be running on mongodb://localhost:27017.
 
- 2. Setup configuration files.
-
-    - Open blockchain/truffle.sh and set the "node" provider information.
-    - Open server/settings.json and set the url, username and apikey for the provider.
-
- 3. Deploy the smart contract.
+ 2. Deploy the smart contract.
+    - Open blockchain/truffle.sh and set the "node" provider information. Then run:
     ```
     cd blockchain
     ./truffle-migrate.sh
     ```
- 4. download dependencies and build the client.
+ 3. download dependencies and build the client:
     ```
     cd ..
     cd client
     npm install
     npm run build
     ```
- 5. Download dependencies and start the server.
+ 4. Download dependencies, setup and start the server.
+    - Open server/settings.json and set the url, username and apikey for the provider. Then run:
     ```
     cd ..
     cd server
@@ -37,7 +34,7 @@ The front end is built using [React](https://reactjs.org) and [Redux](https://re
     node server.js
     ```
 
- 6. Open http://localhost:3001.
+ 5. Open http://localhost:3001.
 
 ### Game rules
 
