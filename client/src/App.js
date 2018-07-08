@@ -15,7 +15,7 @@ class App extends Component {
     }
 
     logout() {
-        if(this.props.account) {
+        if(this.props.sessionData && this.props.sessionData.url) {
             this.props.dispatch({ type: 'LOGOUT' });
             return 'logged out';
         }

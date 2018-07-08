@@ -8,7 +8,11 @@ class Connection extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {};
+        this.state = {
+            url: '',
+            user: '',
+            password: '',
+        };
 
         this.handleUrlChange = this.handleUrlChange.bind(this);
         this.handleUserChange = this.handleUserChange.bind(this);
