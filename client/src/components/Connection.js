@@ -8,9 +8,7 @@ class Connection extends Component {
     constructor(props) {
         super(props);
 
-        this.state = {
-            url: 'HTTP://127.0.0.1:7545'
-        };
+        this.state = {};
 
         this.handleUrlChange = this.handleUrlChange.bind(this);
         this.handleUserChange = this.handleUserChange.bind(this);

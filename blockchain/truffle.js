@@ -11,7 +11,7 @@ module.exports = {
     },
     node: {
       provider: () => {
-        return new Web3.providers.HttpProvider('https://u0iln8goff-u0ecf65rur-rpc.us-east-2.kaleido.io', 0, 'u0fcafyhlo', '472NVgebspcwhdqiGQIUAgRU4HpA1LmxyY5DzOr0SYk');
+        return new Web3.providers.HttpProvider('', 0, '', '');
       },
       network_id: "*", // Match any network id
       gasPrice: 0,
