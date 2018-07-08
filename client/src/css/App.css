@@ -31,8 +31,19 @@
 
 .account {
     margin-left: 20px;
-    margin-right: 20px;
+    margin-right: 10px;
     white-space: nowrap;
+}
+
+.logout-button {
+    font-size: 16px;
+    margin-right: 20px;
+    color: white;
+    border: none;
+    height: 40px;
+    min-width: 100px;
+    background: linear-gradient(rgb(224, 0, 0), rgb(134, 0, 0));
+    cursor: pointer;
 }
 
 .main-screen-container {

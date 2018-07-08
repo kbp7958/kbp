@@ -10,7 +10,9 @@ class MainScreen extends Component {
     render() {
 
         let component;
-        if (this.props.contractState.raceFinished) {
+        if(!this.props.contractState) {
+            return <div>Loading race...</div>
+        } else if (this.props.contractState.raceFinished) {
             if(this.props.lastEvent !== 'Initialization' && this.props.lastEvent !== 'Race animation ended') {
                 component = <RaceAnimation winnerHorse={this.props.contractState.winnerHorse} />
             } else {

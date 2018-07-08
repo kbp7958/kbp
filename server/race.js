@@ -3,47 +3,84 @@ const contract = require('truffle-contract');
 const assert = require('assert');
 const fs = require('fs');
 
-let account;
-let Race;
-
-let init = (provider, eventListener) => {
+let connect = (url, user, password, eventListener) => {
+    console.log('Attempting to connect to ' + url + ' with user "' + (user || '') + '"');
     return new Promise((resolve, reject) => {
-        let web3 = new Web3(new Web3.providers.HttpProvider(provider.url, 0, provider.username, provider.apikey));
-        web3.eth.getCoinbase((err, coinBase) => {
-            assert.equal(null, err);
-            account = coinBase;
-            Race = contract(JSON.parse(fs.readFileSync('../blockchain/build/contracts/Race.json', 'utf8')));
-            Race.setProvider(web3.currentProvider);
-            listenForEvents(eventListener).then(() => {
-                resolve();
+        let web3 = new Web3(new Web3.providers.HttpProvider(url, 0, user, password));
+        if(web3.isConnected()) {
+            let raceContract = contract(JSON.parse(fs.readFileSync('../blockchain/build/contracts/Race.json', 'utf8')));
+            raceContract.setProvider(web3.currentProvider);
+            web3.eth.getBlockNumber((err, blockNumber) => {
+                listenForEvents(raceContract, eventListener, blockNumber).then((events) => {
+                    console.log('Connection successful');
+                    resolve({raceContract, accounts: web3.eth.accounts, events});
+                }).catch(() => {
+                    console.log('Estblished connection, but could not access contract');
+                    reject();
+                });
             });
+        } else {
+            console.log('Connection failed');
+            reject();
+        }
+    });
+};
+
+let listenForEvents = (raceConnection, eventListener, skipBlock) => {
+    return new Promise((resolve, reject) => {
+        raceConnection.deployed().then(function (instance) {
+            let betPlacedEvent = instance.betPlaced({}, { fromBlock: 'latest', toBlock: 'latest' });
+            betPlacedEvent.watch((err, result) => {
+                assert.equal(null, err);
+                if(result.blockNumber != skipBlock) {
+                    eventListener('Bet placed');
+                }
+            });
+            let playersReadyToRaceEvent = instance.playersReadyToRaceChanged({}, { fromBlock: 'latest', toBlock: 'latest' });
+            playersReadyToRaceEvent.watch((err, result) => {
+                assert.equal(null, err);
+                if(result.blockNumber != skipBlock) {
+                    eventListener('Players ready to race changed');
+                }
+            });
+            let raceFinishedEvent = instance.finishedRace({}, { fromBlock: 'latest', toBlock: 'latest' });
+            raceFinishedEvent.watch((err, result) => {
+                assert.equal(null, err);
+                if(result.blockNumber != skipBlock) {
+                    eventListener('Finished race');
+                }
+            });
+            resolve([betPlacedEvent, playersReadyToRaceEvent, raceFinishedEvent]);
+        }).catch(function (error) {
+            reject(error)
         });
     });
 };
 
-let listenForEvents = (eventListener) => {
-    return Race.deployed().then(function (instance) {
-        instance.betPlaced({}, { fromBlock: 'latest', toBlock: 'latest' }).watch((err) => {
-            assert.equal(null, err);
-            eventListener('Bet placed');
+let stopListening = (raceConnection) => {
+    return new Promise((resolve, reject) => {
+        raceConnection.deployed().then(function (instance) {
+            // instance.allEvents().stopWatching();
+            // console.log(instance.allEvents())
+            // console.log('Stop listeners')
+            // instance.betPlaced({}, { fromBlock: 'latest', toBlock: 'latest' }).stopWatching((err, details) => {
+            //     console.log(err)
+            //     console.log(details)
+            // });
+            // instance.playersReadyToRaceChanged({}, { fromBlock: 'latest', toBlock: 'latest' }).stopWatching();
+            // instance.finishedRace({}, { fromBlock: 'latest', toBlock: 'latest' }).stopWatching();
+            resolve();
+        }).catch(function (error) {
+            // console.log("AAAAAAAAAAAAAAAAA")
+            reject(error)
         });
-        instance.playersReadyToRaceChanged({}, { fromBlock: 'latest', toBlock: 'latest' }).watch((err) => {
-            assert.equal(null, err);
-            eventListener('Players ready to race changed');
-        });
-        instance.finishedRace({}, { fromBlock: 'latest', toBlock: 'latest' }).watch((err) => {
-            assert.equal(null, err);
-            eventListener('Finished race');
-        });
-    }).catch(function (error) {
-        console.log(error)
     });
 };
 
-let getState = () => {
+let getState = (raceContract) => {
     let raceInstance;
     let contractState = {};
-    return Race.deployed().then(function (instance) {
+    return raceContract.deployed().then(function (instance) {
         raceInstance = instance;
         return raceInstance.horseCount();
     }).then(function (horseCount) {
@@ -95,30 +132,26 @@ let getState = () => {
     });
 };
 
-let placeBet = (index, amount) => {
-    return Race.deployed().then(function (instance) {
+let placeBet = (raceContract, index, amount, account) => {
+    return raceContract.deployed().then(function (instance) {
         return instance.placeBet(index, amount, {from: account, gas: 45000000});
     }).catch(function (error) {
         console.log(error)
     });
 }
 
-let playerReadyToRace = (index, amount) => {
-    return Race.deployed().then(function (instance) {
-        return instance.playerReadyToRace(index, amount, {from: account, gas: 45000000});
+let playerReadyToRace = (raceContract, account) => {
+    return raceContract.deployed().then(function (instance) {
+        return instance.playerReadyToRace({from: account, gas: 45000000});
     }).catch(function (error) {
         console.log(error)
     });
 }
 
-let getAccount = () => {
-    return account;
-};
-
 module.exports = {
-    init,
+    connect,
+    stopListening,
     getState,
     placeBet,
-    getAccount,
     playerReadyToRace
 };

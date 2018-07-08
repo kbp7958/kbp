@@ -28,7 +28,8 @@ class PlaceBet extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        this.props.dispatch({ type: 'PLACE_BET', payload: { index: this.state.selectedHorse, amount: this.state.betAmount } });
+        this.props.dispatch({ type: 'PLACE_BET', payload: { index: this.state.selectedHorse,
+            amount: this.state.betAmount, account: this.props.account} });
 
         let audio = new Audio(betSound);
         audio.play();
@@ -59,6 +60,7 @@ class PlaceBet extends Component {
 
 const mapStateToProps = state => ({
     contractState: state.contractState,
+    account: state.account,
     sounds: state.sounds
 });
 
