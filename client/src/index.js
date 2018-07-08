@@ -9,10 +9,18 @@ import io from 'socket.io-client';
 
 let reducer = (state = {}, {type, payload} ) => {
     switch(type) {
-        case 'SET_ACCOUNT':
+        case 'LOGIN':
             return Object.assign({}, state, {
-                account: payload.account,
-                lastEvent: payload.eventLabel
+                attemptingToConnect: true
+            });
+        case 'SESSION_STATUS_UPDATE':
+            return Object.assign({}, state, {
+                sessionData: payload.sessionData,
+                attemptingToConnect: false
+            });
+        case 'SELECT_ACCOUNT':
+            return Object.assign({}, state, {
+                account: payload.account
             });
         case 'SET_SOUNDS':
             return Object.assign({}, state, {
@@ -21,16 +29,16 @@ let reducer = (state = {}, {type, payload} ) => {
         case 'CONTRACT_STATE_UPDATE':
             return Object.assign({}, state, {
                 contractState: payload.contractState,
-                lastEvent: payload.eventLabel
+                lastEvent: payload.eventDescription
             });
         case 'RACE_ANIMATION_ENDED':
-        return Object.assign({}, state, {
-            lastEvent: 'Race animation ended'
-        });
+            return Object.assign({}, state, {
+                lastEvent: 'Race animation ended'
+            });
         case 'PLAY_SOUND':
-        return Object.assign({}, state, {
-            currentSound: payload.sound
-        });
+            return Object.assign({}, state, {
+                currentSound: payload.sound
+            });
         default: return state;
     }
 }
@@ -39,7 +47,9 @@ const socketHandler = (socket) => (store) => (next) => (action) => {
     switch(action.type) {
         case 'PLACE_BET':
         case 'PLAYER_READY_TO_RACE':
+        case 'LOGIN':
         case 'SET_SOUNDS':
+        case 'LOGOUT':
         socket.emit('action', action); break;
         default: break;
     }

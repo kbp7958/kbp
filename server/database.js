@@ -4,10 +4,11 @@ const {MONGODB_URL, DATABASE_NAME} = require('./constants');
 
 let db = null;
 
-let connect = () => {
+let connect = (callback) => {
     MongoClient.connect(MONGODB_URL, { useNewUrlParser: true }, (err, client) => {
         assert.equal(null, err);
         db = client.db(DATABASE_NAME);
+        callback();
     });
 };
 

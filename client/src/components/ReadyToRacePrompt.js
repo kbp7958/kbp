@@ -11,7 +11,7 @@ class ReadyToRacePrompt extends Component {
     }
 
     playerReadyToRace = () => {
-        this.props.dispatch({ type: 'PLAYER_READY_TO_RACE' });
+        this.props.dispatch({ type: 'PLAYER_READY_TO_RACE', payload: { account: this.props.account} });
 
         let audio = new Audio(readyToRaceSound);
         audio.play();
@@ -34,6 +34,7 @@ class ReadyToRacePrompt extends Component {
 }
 
 const mapStateToProps = state => ({
+    account: state.account,
     sounds: state.sounds
 });
 
