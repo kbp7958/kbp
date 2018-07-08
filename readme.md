@@ -25,8 +25,7 @@ The front end is built using [React](https://reactjs.org) and [Redux](https://re
     npm install
     npm run build
     ```
- 4. Download dependencies, setup and start the server.
-    - Open server/settings.json and set the url, username and apikey for the provider. Then run:
+ 4. Download dependencies and start the server.
     ```
     cd ..
     cd server
@@ -34,7 +33,7 @@ The front end is built using [React](https://reactjs.org) and [Redux](https://re
     node server.js
     ```
 
- 5. Open http://localhost:3001.
+ 5. Open http://localhost:3001. Enter the provider credentials and click on "Connect".
 
 ### Game rules
 
@@ -60,4 +59,8 @@ The front end is built using [React](https://reactjs.org) and [Redux](https://re
 
 <p align="center">
     <img src="./readme-resources/screen-3.png">
+</p>
+
+<p align="center">
+    <img src="./readme-resources/screen-4.png">
 </p>
