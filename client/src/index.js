@@ -8,14 +8,11 @@ import { Provider } from 'react-redux';
 import io from 'socket.io-client';
 
 let reducer = (state = {}, {type, payload} ) => {
-    // console.log(type)
-    // console.log(payload)
-    // console.log('---------------')
     switch(type) {
         case 'LOGIN':
-        return Object.assign({}, state, {
-            attemptingToConnect: true
-        });
+            return Object.assign({}, state, {
+                attemptingToConnect: true
+            });
         case 'SESSION_STATUS_UPDATE':
             return Object.assign({}, state, {
                 sessionData: payload.sessionData,

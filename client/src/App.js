@@ -15,7 +15,14 @@ class App extends Component {
     }
 
     logout() {
-        this.props.dispatch({ type: 'LOGOUT' });
+        if(this.props.account) {
+            this.props.dispatch({ type: 'LOGOUT' });
+            return 'logged out';
+        }
+    }
+
+    componentDidMount() {
+        window.addEventListener('beforeunload', this.logout);
     }
 
     render() {
@@ -26,7 +33,7 @@ class App extends Component {
                 return (
                     <div className="app">
                         <div className="top-bar">
-                            <div className="app-title">Racecourse</div>
+                            <div className="app-main-title">Racecourse</div>
                             <div className="right-aligned-container">
                                 <div className="account">Your account:</div>
                                 <AccountSelector />
@@ -46,37 +53,6 @@ class App extends Component {
                     </div>
                 );
             }
-
-            
-            // switch(this.props.session) {
-            //     case 'loginFailed':
-            //     console.log('LOGIN FAILED!!!!')
-            //     case 'loginRequired':
-            //     return (
-            //         <Connection />
-            //     );
-            //     case 'loggedIn':
-            //     return (
-            //         <div>You are logged in</div>
-            //     );
-            //     // if (this.props.account && this.props.contractState) {
-            //     //     return (
-            //     //         <div className="app">
-            //     //             <div className="top-bar">
-            //     //                 <div className="app-title">Racecourse</div>
-            //     //                 <div className="right-aligned-container">
-            //     //                     <div className="account">Your account: {this.props.account}</div>
-            //     //                     <SoundControl />
-            //     //                 </div>
-            //     //             </div>
-            //     //             <div className="main-screen-container">
-            //     //                 <MainScreen />
-            //     //             </div>
-            //     //         </div>
-            //     //     );
-            //     // }
-
-            // }
 
         } else {
             return (

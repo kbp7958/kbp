@@ -9,9 +9,6 @@ class Connection extends Component {
         super(props);
 
         this.state = {
-            // url: 'https://u0iln8goff-u0chfgkzmv-rpc.us-east-2.kaleido.io',
-            // user: 'u0hvbwcm18',
-            // password: 'C2Xfcr8v4btMja_nP8OzukEBxpXrN3JoDR1J_5otfgA',
             url: 'HTTP://127.0.0.1:7545'
         };
 
