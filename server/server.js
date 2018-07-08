@@ -23,6 +23,8 @@ io.on('connection', (socket) => {
 
     database.querySounds((sounds) => {
 
+        socket.emit('action', { type: 'SET_SOUNDS', payload: { sounds } });
+
         let eventListener = (eventLabel) => {
             console.log('Event: ' + eventLabel + ' (client ' + socket.id + ')');
             dispatchContratStateUpdate(socket, 'Contract status changed');
