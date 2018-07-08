@@ -10,7 +10,8 @@ class PlaceBet extends Component {
         this.state = {
             betAmount: 10,
             selectedHorse: 0,
-            betPlaced: false
+            betPlaced: false,
+            horseSelected: false
         };
 
         this.handleBetAmountChange = this.handleBetAmountChange.bind(this);
@@ -23,7 +24,10 @@ class PlaceBet extends Component {
     }
 
     handleSelectedHorseChange(event) {
-        this.setState({selectedHorse: event.target.value});
+        this.setState({
+            selectedHorse: event.target.value,
+            horseSelected: true
+        });
     }
 
     handleSubmit(event) {
@@ -43,15 +47,19 @@ class PlaceBet extends Component {
         return (
             <div className="place-bet-container">
                 <form className="place-bet-form" onSubmit={this.handleSubmit}>
-                    <label>Horse:</label>
-                    <select className="horse-to-bet" value={this.state.selectedHorse} onChange={this.handleSelectedHorseChange}>
+                    <div className="horse-radios-container">
                         {this.props.contractState.horses.map((horse) => (
-                            <option value={horse.index} key={horse.index}>{horse.name}</option>
+                            <label className="horse-radio-container" key={horse.index}>
+                                <img src={require('../img/horse-' + (Number(horse.index) + 1) + '.png')} className="horse-radio-image" alt="horse" />
+                                {horse.name}
+                                <input className="horse-radio-input" type="radio" name="horse" value={horse.index} key={horse.index}
+                                onChange={this.handleSelectedHorseChange} />
+                            </label>
                         ))}
-                    </select>
-                    <label>Amount:</label>
+                    </div>
+                    <label className="form-label">Amount:</label>
                     <input type="number" className="bet-amount-input" value={this.state.betAmount} onChange={this.handleBetAmountChange} />
-                    <button type="submit" className={'place-bet-button ' + (this.state.betPlaced? 'disabled' : '')}>Place bet</button>
+                    <button type="submit" className={'place-bet-button ' + (this.state.betPlaced || !this.state.horseSelected? 'disabled' : '')}>Place bet</button>
                 </form>
             </div>
         );

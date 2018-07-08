@@ -10,7 +10,7 @@
     background-color: white;
 }
 
-.place-bet-form label {
+.place-bet-form .form-label {
     margin-right: 10px;
 }
 
@@ -21,6 +21,37 @@
     width: 140px;
     border: solid 3px lightgray;
     background-color: white;
+}
+
+.horse-radios-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.horse-radio-container {
+    height: 120px;
+    width: 110px;
+    display: block;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    cursor: pointer;
+    margin-left: 15px;
+    margin-right: 15px;
+}
+
+.horse-radio-image {
+    max-width: 100%;
+    max-height: 100%;
+    margin-bottom: 5px;
+}
+
+.horse-radio-input {
+    margin-top: 8px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .bet-amount-input {
