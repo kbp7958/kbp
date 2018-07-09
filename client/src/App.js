@@ -15,20 +15,11 @@ class App extends Component {
     }
 
     logout() {
-        if(this.props.sessionData && this.props.sessionData.url) {
-            this.props.dispatch({ type: 'LOGOUT' });
-            return 'logged out';
-        }
-    }
-
-    componentDidMount() {
-        window.addEventListener('beforeunload', this.logout);
+        this.props.dispatch({ type: 'LOGOUT' });
     }
 
     render() {
-
         if(this.props.sessionData) {
-
             if(this.props.sessionData.accounts) {
                 return (
                     <div className="app">
@@ -53,7 +44,6 @@ class App extends Component {
                     </div>
                 );
             }
-
         } else {
             return (
                 <div className="loading">

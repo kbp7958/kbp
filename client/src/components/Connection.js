@@ -9,9 +9,9 @@ class Connection extends Component {
         super(props);
 
         this.state = {
-            url: '',
-            user: '',
-            password: '',
+            url: this.props.sessionData.url || '',
+            user: this.props.sessionData.user || '',
+            password: this.props.sessionData.password || '',
         };
 
         this.handleUrlChange = this.handleUrlChange.bind(this);
@@ -57,7 +57,7 @@ class Connection extends Component {
                 <label>Password</label>
                 <input type="password" className="connect-apikey-input" value={this.state.apikey} onChange={this.handlePasswordChange} />
 
-                <button type="submit" className={'connect-button ' + (this.props.attemptingToConnect ? 'disabled' : '')}>Connect</button>
+                <button type="submit" className={'connect-button ' + (this.props.attemptingToConnect || this.state.url === '' ? 'disabled' : '')}>Connect</button>
             </form>
         </div>);
     }

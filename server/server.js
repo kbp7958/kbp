@@ -13,6 +13,8 @@ const session = require("express-session")({
 const sharedsession = require("express-socket.io-session");
 const Racecourse = require('./Racecourse');
 
+const racecourses = {};
+
 app.use(session);
 
 io.use(sharedsession(session));
@@ -26,13 +28,16 @@ io.on('connection', (socket) => {
         socket.emit('action', { type: 'SET_SOUNDS', payload: { sounds } });
 
         let eventListener = (eventLabel) => {
-            console.log('Event: ' + eventLabel + ' (client ' + socket.id + ')');
+            console.log('Event: ' + eventLabel + ' (client ' + socket.handshake.session.id + ')');
             dispatchContratStateUpdate(socket, 'Contract status changed');
         };
 
-        socket.emit('action', { type: 'SET_SOUNDS', payload: { sounds } });
         dispatchSessionInformation(socket);
-        
+
+        if(racecourses[socket.handshake.session.id]) {
+            dispatchContratStateUpdate(socket, 'Initialization');
+        }
+       
         socket.on('action', ({ type, payload }) => {
             switch (type) {
                 case 'LOGIN':
@@ -42,30 +47,33 @@ io.on('connection', (socket) => {
                     handleLogout(socket);
                     break;
                 case 'PLACE_BET':
-                    socket.handshake.session.racecourse.placeBet(payload.index, payload.amount, payload.account);
+                    racecourses[socket.handshake.session.id].placeBet(payload.index, payload.amount, payload.account);
                     break;
                 case 'PLAYER_READY_TO_RACE':
-                    socket.handshake.session.racecourse.playerReadyToRace(payload.account);
+                    racecourses[socket.handshake.session.id].playerReadyToRace(payload.account);
                     break;
                 case 'SET_SOUNDS':
                     database.setSounds(payload.sounds);
                     break;
             }
         });
+
     });
 });
 
 let handleLogin = (socket, url, user, password, eventListener) => {
-    console.log('Attempting to connect to ' + url + ' with user "' + (user || '') + '" (client ' + socket.id + ')');
+    console.log('Attempting to connect to ' + url + ' with user "' + (user || '') + '" (client ' + socket.handshake.session.id + ')');
     let racecourse;
     try {
         racecourse = new Racecourse(url, user, password, eventListener);
+        console.log('Connection successful')
     } catch(error) {
+        console.log('Connection failed')
         console.log(error)
     }
 
     if(racecourse) {
-        socket.handshake.session.racecourse = racecourse;
+        racecourses[socket.handshake.session.id] = racecourse;
         socket.handshake.session.data = {
             loginFailed: false,
             accounts: racecourse.accounts,
@@ -84,9 +92,9 @@ let handleLogin = (socket, url, user, password, eventListener) => {
 };
 
 let handleLogout = (socket) => {
-    console.log('Disconnected from ' + socket.handshake.session.data.url + ' with user "' + (socket.handshake.session.data.user || '') + '" (client ' + socket.id + ')');
-    socket.handshake.session.racecourse.stopWatching();
-    delete socket.handshake.session.racecourse;
+    console.log('Disconnected from ' + socket.handshake.session.data.url + ' with user "' + (socket.handshake.session.data.user || '') + '" (client ' + socket.handshake.session.id + ')');
+    racecourses[socket.handshake.session.id].stopWatching();
+    delete racecourses[socket.handshake.session.id];
     delete socket.handshake.session.data;
     socket.handshake.session.save();
     dispatchSessionInformation(socket);
@@ -99,7 +107,7 @@ let dispatchSessionInformation = (socket) => {
 };
 
 let dispatchContratStateUpdate = (socket, eventDescription) => {
-    socket.handshake.session.racecourse.getState().then((contractState) => {
+    racecourses[socket.handshake.session.id].getState().then((contractState) => {
         socket.emit('action', { type: 'CONTRACT_STATE_UPDATE', payload: { contractState, eventDescription } });
     });
 };
